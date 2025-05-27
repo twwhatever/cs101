@@ -27,53 +27,53 @@ def _load_weights_into_gpt(gpt, params):
     for b in range(len(gpt.trf_blocks)):
         q_w, k_w, v_w = torch.chunk(
             params[f"h.{b}.attn.c_attn.weight"], 3, axis=-1)
-        gpt.trf_blocks[b].att.W_q.weight = _assign(
-            gpt.trf_blocks[b].att.W_q.weight, q_w.T)
-        gpt.trf_blocks[b].att.W_k.weight = _assign(
-            gpt.trf_blocks[b].att.W_k.weight, k_w.T)
-        gpt.trf_blocks[b].att.W_v.weight = _assign(
-            gpt.trf_blocks[b].att.W_v.weight, v_w.T)
+        gpt.trf_blocks[b].attention_block.att.W_q.weight = _assign(
+            gpt.trf_blocks[b].attention_block.att.W_q.weight, q_w.T)
+        gpt.trf_blocks[b].attention_block.att.W_k.weight = _assign(
+            gpt.trf_blocks[b].attention_block.att.W_k.weight, k_w.T)
+        gpt.trf_blocks[b].attention_block.att.W_v.weight = _assign(
+            gpt.trf_blocks[b].attention_block.att.W_v.weight, v_w.T)
 
         q_b, k_b, v_b = torch.chunk(
             params[f"h.{b}.attn.c_attn.bias"], 3, axis=-1)
-        gpt.trf_blocks[b].att.W_q.bias = _assign(
-            gpt.trf_blocks[b].att.W_q.bias, q_b)
-        gpt.trf_blocks[b].att.W_k.bias = _assign(
-            gpt.trf_blocks[b].att.W_k.bias, k_b)
-        gpt.trf_blocks[b].att.W_v.bias = _assign(
-            gpt.trf_blocks[b].att.W_v.bias, v_b)
+        gpt.trf_blocks[b].attention_block.att.W_q.bias = _assign(
+            gpt.trf_blocks[b].attention_block.att.W_q.bias, q_b)
+        gpt.trf_blocks[b].attention_block.att.W_k.bias = _assign(
+            gpt.trf_blocks[b].attention_block.att.W_k.bias, k_b)
+        gpt.trf_blocks[b].attention_block.att.W_v.bias = _assign(
+            gpt.trf_blocks[b].attention_block.att.W_v.bias, v_b)
 
-        gpt.trf_blocks[b].att.out_proj.weight = _assign(
-            gpt.trf_blocks[b].att.out_proj.weight,
+        gpt.trf_blocks[b].attention_block.att.out_proj.weight = _assign(
+            gpt.trf_blocks[b].attention_block.att.out_proj.weight,
             params[f"h.{b}.attn.c_proj.weight"].T)
-        gpt.trf_blocks[b].att.out_proj.bias = _assign(
-            gpt.trf_blocks[b].att.out_proj.bias,
+        gpt.trf_blocks[b].attention_block.att.out_proj.bias = _assign(
+            gpt.trf_blocks[b].attention_block.att.out_proj.bias,
             params[f"h.{b}.attn.c_proj.bias"])
 
-        gpt.trf_blocks[b].ff.layers[0].weight = _assign(
-            gpt.trf_blocks[b].ff.layers[0].weight,
+        gpt.trf_blocks[b].ff_block.ff.layers[0].weight = _assign(
+            gpt.trf_blocks[b].ff_block.ff.layers[0].weight,
             params[f"h.{b}.mlp.c_fc.weight"].T)
-        gpt.trf_blocks[b].ff.layers[0].bias = _assign(
-            gpt.trf_blocks[b].ff.layers[0].bias,
+        gpt.trf_blocks[b].ff_block.ff.layers[0].bias = _assign(
+            gpt.trf_blocks[b].ff_block.ff.layers[0].bias,
             params[f"h.{b}.mlp.c_fc.bias"])
-        gpt.trf_blocks[b].ff.layers[2].weight = _assign(
-            gpt.trf_blocks[b].ff.layers[2].weight,
+        gpt.trf_blocks[b].ff_block.ff.layers[2].weight = _assign(
+            gpt.trf_blocks[b].ff_block.ff.layers[2].weight,
             params[f"h.{b}.mlp.c_proj.weight"].T)
-        gpt.trf_blocks[b].ff.layers[2].bias = _assign(
-            gpt.trf_blocks[b].ff.layers[2].bias,
+        gpt.trf_blocks[b].ff_block.ff.layers[2].bias = _assign(
+            gpt.trf_blocks[b].ff_block.ff.layers[2].bias,
             params[f"h.{b}.mlp.c_proj.bias"])
 
-        gpt.trf_blocks[b].norm1.weight = _assign(
-            gpt.trf_blocks[b].norm1.weight,
+        gpt.trf_blocks[b].attention_block.norm1.weight = _assign(
+            gpt.trf_blocks[b].attention_block.norm1.weight,
             params[f"h.{b}.ln_1.weight"])
-        gpt.trf_blocks[b].norm1.bias = _assign(
-            gpt.trf_blocks[b].norm1.bias,
+        gpt.trf_blocks[b].attention_block.norm1.bias = _assign(
+            gpt.trf_blocks[b].attention_block.norm1.bias,
             params[f"h.{b}.ln_1.bias"])
-        gpt.trf_blocks[b].norm2.weight = _assign(
-            gpt.trf_blocks[b].norm2.weight,
+        gpt.trf_blocks[b].ff_block.norm2.weight = _assign(
+            gpt.trf_blocks[b].ff_block.norm2.weight,
             params[f"h.{b}.ln_2.weight"])
-        gpt.trf_blocks[b].norm2.bias = _assign(
-            gpt.trf_blocks[b].norm2.bias,
+        gpt.trf_blocks[b].ff_block.norm2.bias = _assign(
+            gpt.trf_blocks[b].ff_block.norm2.bias,
             params[f"h.{b}.ln_2.bias"])
 
     gpt.final_norm.weight = _assign(gpt.final_norm.weight, params["ln_f.weight"])
