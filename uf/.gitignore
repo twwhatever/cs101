@@ -50,4 +50,7 @@ CMakePresets.json
 unit_tests
 my_app
 
+# clangd cache
+.cache/
+
 # End of .gitignore
