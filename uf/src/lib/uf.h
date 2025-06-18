@@ -30,8 +30,8 @@ template <HashEq T> class UnionFind {
   void connect(const T& a, const T& b) {
     add(a);
     add(b);
-    size_t root_a = find(a);
-    size_t root_b = find(b);
+    size_t root_a = find(id_[a]);
+    size_t root_b = find(id_[b]);
     if (root_a == root_b) {
       return;
     }
@@ -58,14 +58,7 @@ template <HashEq T> class UnionFind {
     }
     size_t idx_a = it_a->second;
     size_t idx_b = it_b->second;
-    // Find root without path compression
-    while (parent_[idx_a] != idx_a) {
-      idx_a = parent_[idx_a];
-    }
-    while (parent_[idx_b] != idx_b) {
-      idx_b = parent_[idx_b];
-    }
-    return idx_a == idx_b;
+    return find(idx_a) == find(idx_b);
   }
 
   // Return the size of set containing a.
@@ -75,11 +68,8 @@ template <HashEq T> class UnionFind {
       return 0;
     }
     size_t idx = it->second;
-    // Find root without path compression
-    while (parent_[idx] != idx) {
-      idx = parent_[idx];
-    }
-    auto sz_it = size_from_root_.find(idx);
+    size_t root = find(idx);
+    auto sz_it = size_from_root_.find(root);
     if (sz_it == size_from_root_.end()) {
       return 0;
     }
@@ -90,23 +80,18 @@ template <HashEq T> class UnionFind {
   size_t size() const { return set_count_; }
 
  private:
-  // Find the root for the given element.
-  size_t find(const T& a) const {
-    auto it = id_.find(a);
-    if (it == id_.end()) {
-      throw std::invalid_argument("Element not found");
-    }
-    size_t idx = it->second;
+  // Find the root for the given index.
+  size_t find(size_t idx) const {
     size_t root = idx;
     // Find root
     while (parent_[root] != root) {
-      root = parent_[root];
+        root = parent_[root];
     }
     // Path compression
     while (parent_[idx] != root) {
-      size_t next = parent_[idx];
-      parent_[idx] = root;
-      idx = next;
+        size_t next = parent_[idx];
+        parent_[idx] = root;
+        idx = next;
     }
     return root;
   }
