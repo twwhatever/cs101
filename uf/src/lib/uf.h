@@ -80,8 +80,9 @@ template <HashEq T> class UnionFind {
       idx = parent_[idx];
     }
     auto sz_it = size_from_root_.find(idx);
-    if (sz_it == size_from_root_.end())
+    if (sz_it == size_from_root_.end()) {
       return 0;
+    }
     return sz_it->second;
   }
 
