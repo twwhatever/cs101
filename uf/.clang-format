@@ -1,0 +1,30 @@
+BasedOnStyle: LLVM
+IndentWidth: 2
+UseTab: Never
+BraceWrapping:
+  AfterControlStatement: true
+  AfterFunction: false
+  AfterClass: false
+  AfterEnum: false
+  AfterStruct: false
+  BeforeElse: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+AlwaysBreakAfterReturnType: None
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AccessModifierOffset: -1
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignEscapedNewlines: Left
+AlignOperands: true
+AlignTrailingComments: true
+BreakBeforeBraces: Attach
+ColumnLimit: 100
+DerivePointerAlignment: false
+PointerAlignment: Left
+SortIncludes: true
