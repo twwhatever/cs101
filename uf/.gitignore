@@ -1,0 +1,53 @@
+# C++/CMake/Conan build artifacts
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+CMakeUserPresets.json
+
+# Conan generated files
+conanbuild/
+conanrun/
+conan.lock
+
+# Compiled object files and libraries
+*.o
+*.obj
+*.so
+*.a
+*.dll
+*.dylib
+*.exe
+*.out
+
+# IDE/editor files
+*.user
+*.swp
+*.swo
+*.log
+*.idea/
+*.vscode/
+*.code-workspace
+
+# Xcode/Visual Studio
+*.xcodeproj
+*.xcworkspace
+*.vcxproj*
+*.sln
+
+# Compilation database
+compile_commands.json
+
+# macOS
+.DS_Store
+
+# Presets (keep CMakeUserPresets.json, ignore generated ones)
+CMakePresets.json
+
+# Ignore test binaries
+unit_tests
+my_app
+
+# End of .gitignore
