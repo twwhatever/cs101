@@ -2,24 +2,18 @@
 
 #include <cstddef>
 #include <iostream>
-#include "boost/pfr.hpp"
 #include <boost/describe.hpp>
 #include <boost/mp11.hpp>
 
-template<typename T> void printOffsets() {
-  T t;
-  const char* base = reinterpret_cast<const char*>(&t);
+#define DECL_SCALAR(T, type, name)         type name;
+#define DECL_ARRAY(T, type, name, N)       type name[N];
 
-  boost::pfr::for_each_field(t, [&](auto& field, std::size_t i) {
-        auto const* p = reinterpret_cast<const char*>(&field);
-        std::size_t off = static_cast<std::size_t>(p - base);
-        std::cout << "sizeof(field " << i << ") = " << sizeof(field) << "\n";
-        std::cout << "offset(field " << i << ") = " << off << "\n";
-    });
+#define BDESCR_SCALAR(T, type, name) name,
+#define BDESCR_ARRAY(T, type, name, N) name,
 
-  std::cout << "total size = " << sizeof(T) << "\n";
-  std::cout << "alignment = " << alignof(T) << "\n";
-}
+#define DECL_STRUCT_AND_DESCRIBE(Type, FIELDS) \
+    struct Type { FIELDS(Type, DECL_SCALAR, DECL_ARRAY) }; \
+    BOOST_DESCRIBE_STRUCT(Type, (), ( FIELDS(Type, BDESCR_SCALAR, BDESCR_ARRAY) )) \
 
 template <class T>
 void print_layout() {
@@ -53,5 +47,3 @@ void print_layout() {
         }
     });
 }
-
-int add(int a, int b); 
